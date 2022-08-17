@@ -14,7 +14,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        // $product=Product::all();
+        // error_log(print_r($product, TRUE));
+        // file_put_contents('php://stderr', print_r($product, TRUE)); 
+        // echo("$product");
+        return view("index", ["title"=>"index", "index"=>Product::all()]);
     }
 
     /**

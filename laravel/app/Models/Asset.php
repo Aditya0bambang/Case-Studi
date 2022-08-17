@@ -14,4 +14,10 @@ class Asset extends Model
     public function product_asset() {
         return $this->hasOne(Product_Asset::class);
     }
+    protected $fillable = [
+        "name",
+        "path",
+        "size"
+    ];
+    // protected $connection = 'mysql';
 }

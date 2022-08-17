@@ -14,4 +14,9 @@ class Product_Asset extends Model
     public function product() {
         return $this->belongsTo(Product::class);
     }
+    protected $fillable = [
+        "asset_id",
+        "product_id",
+    ];
+    // protected $connection = 'mysql';
 }
