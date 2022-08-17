@@ -3,7 +3,7 @@
 @section('container')
 <h1>Add Product</h1>
 <br>
-<form method="POST" action="/products/create">
+<form method="POST" action="/products/create" enctype="multipart/form-data">
   @csrf
     <div class="mb-3">
       <label for="ProductFormName" class="form-label">Product name</label>
@@ -16,6 +16,10 @@
     <div class="mb-3">
         <label for="ProductFormDescription" class="form-label">Product description</label>
         <textarea class="form-control" id="description" name="description" placeholder="About" aria-label="ProductFormDescription" rows="3"></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="asset" class="form-label">Product name</label>
+        <input class="form-control" type="file" id="asset" name="asset" multiple>
       </div>
       {{-- <input type="text" id="title" value={{ $title }} hidden>
       @if ( $title ==  "Create" ) --}}

@@ -22,4 +22,5 @@ route::get('/products/create', [ProductController::class, 'create']);
 route::post('/products/create', [ProductController::class, "store"]);
 route::get('/products/{product:product_slug}', [ProductController::class, 'show']);
 route::get('/products/{product:product_slug}/edit', [ProductController::class, 'edit']);
+route::put('/products/{product:product_slug}', [ProductController::class, 'update']);
 route::delete('/products/{product:product_slug}', [ProductController::class, 'destroy']);

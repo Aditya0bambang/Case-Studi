@@ -3,7 +3,7 @@
 @section('container')
 <h1>Update Product</h1>
 <br>
-<form method="POST" action="/products/products/{{ $product->product_slug }}">
+<form method="POST" action="/products/{{ $product->product_slug }}" enctype="multipart/form-data">
   @method("put")
   @csrf
     <div class="mb-3">

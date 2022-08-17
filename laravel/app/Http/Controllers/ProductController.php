@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Asset;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Product_Asset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -16,11 +18,6 @@ class ProductController extends Controller
      */
     public function index()
     {
-        // $product=Product::all();
-        // error_log(print_r($product, TRUE));
-        // file_put_contents('php://stderr', print_r($product, TRUE)); 
-        // echo("$product");
-        // return view("index", ["title"=>"index", "products"=>Product::all()]);
         return view("index", ["title"=>"index", "products"=>Product::with("Product_Asset.asset")->get()]);
     }
 
@@ -46,12 +43,15 @@ class ProductController extends Controller
         $validatedData = $request->validate([
             'product_name' => "required",
             'price' => "required",
-            'description' => "required"
+            'description' => "required",
+            "asset" => "image|file"
         ]);
-        // return $request;
+        if($request->file('asset')) {
+            $request->file('asset')->store('asset');
+            // Product_Asset::create($request->id);
+        }
         Product::create($validatedData);
         return redirect("/index")->with('success', "new product added");
-        // return view("index", ["title"=>"index", "products"=>Product::all()]);
     }
 
     /**
@@ -62,11 +62,6 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        // $product = DB::table('products')->where('product_slug', $product)->first();
-        // error_log(print_r($product, TRUE));
-        // file_put_contents('php://stderr', print_r($product, TRUE)); 
-        // echo("$product");
-        // $name=$product["product_name"];
         $product->load("Product_Asset.asset");
         return view('detail', ["title"=>$product["product_name"], "product"=>$product]);
     }
@@ -91,7 +86,14 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $validatedData = $request->validate([
+            'product_name' => "required",
+            'price' => "required",
+            'description' => "required"
+        ]);
+        Product::where("id", $product->id)
+        ->update($validatedData);
+        return redirect("/index")->with('success', "product updated");
     }
 
     /**

@@ -23,10 +23,7 @@
                 <a class="nav-link" href="/products/create">Add new product</a>
               </li>
               {{-- <li class="nav-item">
-                <a class="nav-link disabled" href="#">Update product</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled" href="#">Delete product</a>
+                <a class="nav-link disabled" href="#">Upload gambar</a>
               </li> --}}
               {{-- <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
