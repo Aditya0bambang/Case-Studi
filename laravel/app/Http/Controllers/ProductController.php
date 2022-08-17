@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -18,7 +20,8 @@ class ProductController extends Controller
         // error_log(print_r($product, TRUE));
         // file_put_contents('php://stderr', print_r($product, TRUE)); 
         // echo("$product");
-        return view("index", ["title"=>"index", "index"=>Product::all()]);
+        // return view("index", ["title"=>"index", "products"=>Product::all()]);
+        return view("index", ["title"=>"index", "products"=>Product::with("Product_Asset.asset")->get()]);
     }
 
     /**
@@ -29,6 +32,7 @@ class ProductController extends Controller
     public function create()
     {
         //
+        return view("form", ["title"=>"Create", "categories"=>Category::all()]);
     }
 
     /**
@@ -39,7 +43,15 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'product_name' => "required",
+            'price' => "required",
+            'description' => "required"
+        ]);
+        // return $request;
+        Product::create($validatedData);
+        return redirect("/index")->with('success', "new product added");
+        // return view("index", ["title"=>"index", "products"=>Product::all()]);
     }
 
     /**
@@ -50,7 +62,13 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        // $product = DB::table('products')->where('product_slug', $product)->first();
+        // error_log(print_r($product, TRUE));
+        // file_put_contents('php://stderr', print_r($product, TRUE)); 
+        // echo("$product");
+        // $name=$product["product_name"];
+        $product->load("Product_Asset.asset");
+        return view('detail', ["title"=>$product["product_name"], "product"=>$product]);
     }
 
     /**
@@ -61,7 +79,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        return view('edit',["title"=>"update", "product"=>$product]);
     }
 
     /**
@@ -84,6 +102,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        Product::destroy($product->id);
+        return redirect("/index")->with('delete', "a product is deleted");
     }
 }

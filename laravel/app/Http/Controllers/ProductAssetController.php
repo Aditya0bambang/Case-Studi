@@ -15,6 +15,7 @@ class ProductAssetController extends Controller
     public function index()
     {
         //
+        return view("index", ["title"=>"index", "products"=>Product_Asset::all()]);
     }
 
     /**

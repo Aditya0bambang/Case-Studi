@@ -18,3 +18,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/index', [ProductController::class, "index"]);
+route::get('/products/create', [ProductController::class, 'create']);
+route::post('/products/create', [ProductController::class, "store"]);
+route::get('/products/{product:product_slug}', [ProductController::class, 'show']);
+route::get('/products/{product:product_slug}/edit', [ProductController::class, 'edit']);
+route::delete('/products/{product:product_slug}', [ProductController::class, 'destroy']);

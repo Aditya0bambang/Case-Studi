@@ -15,6 +15,7 @@ class AssetController extends Controller
     public function index()
     {
         //
+        return view("index", ["title"=>"index", "products"=>Asset::all()]);
     }
 
     /**
